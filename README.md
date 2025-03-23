@@ -15,8 +15,8 @@
     example: a button component
       npx shadcn-ui@latest add button
 
-# to Edit any  requirements at clerk for authentication 
-    https://dashboard.clerk.com/apps/app_2tBGyllV80LLMeus2IlZn2G0y1i/instances/ins_2tBGyoRRKE0aa4mViGMuyHzq0Qg/user-authentication/email-phone-username
+# at clerk for authentication 
+ 
 
 
 # neonDB -postgresql 

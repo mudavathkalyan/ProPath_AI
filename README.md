@@ -38,3 +38,7 @@ npm i @uiw/react-md-editor
 npm i html2pdf.js@0.9.0
 
 # chatbot for solving  queries
+
+
+
+# deployment using vercel

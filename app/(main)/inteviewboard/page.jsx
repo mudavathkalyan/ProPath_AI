@@ -29,22 +29,17 @@ export default function InterviewBoard() {
     if (!currentQuestion) return;
   
     const response = await getFeedback(userAnswer, currentQuestion);
-  
-    console.log("🛠 Received Feedback:", response); // ✅ Debugging log
-  
-    if (response && response.feedback && response.correctAnswer) {
-      setFeedback(`${response.feedback} \n\n ✅ Correct Answer: ${response.correctAnswer}`);
-    } else {
-      setFeedback("⚠️ AI did not return a valid response. Try again.");
-    }
+    setFeedback(response);  // 🔥 FIXED: Now stores both `feedback` and `correctAnswer`
   
     if (currentQuestionIndex < questions.length - 1) {
       setCurrentQuestionIndex(currentQuestionIndex + 1);
       setUserAnswer("");
     } else {
-      console.log("✅ Interview completed! Showing final review...");
+      console.log("✅ Interview completed!");
     }
   };
+  
+  
   
   
 
@@ -68,7 +63,7 @@ export default function InterviewBoard() {
       {/* Question & Answer Section */}
       {questions.length > 0 && (
         <>
-          <div className="border p-4 rounded-lg bg-gray-100">
+          <div className="border p-4 rounded-lg bg-gray-100 text-black">
             <p className="font-medium">{questions[currentQuestionIndex]}</p>
           </div>
 
@@ -99,10 +94,19 @@ export default function InterviewBoard() {
 
           {/* Feedback Section */}
           {feedback && (
-            <div className="mt-4 p-2 border bg-yellow-100 rounded">
-              <strong>Feedback:</strong> {feedback}
-            </div>
-          )}
+  <div className="mt-4 p-4 border rounded bg-yellow-50 space-y-4">
+    <div>
+      <strong className="block mb-1 text-lg text-yellow-800">🔍 Feedback</strong>
+      <p className="text-gray-800 whitespace-pre-wrap">{feedback.feedback}</p>
+    </div>
+
+    <div>
+      <strong className="block mb-1 text-lg text-green-700"></strong>
+      <p className="text-gray-900 whitespace-pre-wrap">{feedback.correctAnswer}</p>
+    </div>
+  </div>
+)}
+
         </>
       )}
     </div>

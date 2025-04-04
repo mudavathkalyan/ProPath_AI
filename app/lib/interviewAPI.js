@@ -18,28 +18,21 @@ export async function getFeedback(userAnswer, question) {
       body: JSON.stringify({ userAnswer, question }),
     });
 
+    console.log("🛰 Response status:", response.status);
+
     if (!response.ok) {
-      throw new Error(`Failed to fetch feedback: ${response.status} ${response.statusText}`);
+      const text = await response.text();
+      console.error("⚠️ API error response:", text);
+      throw new Error("Failed to fetch feedback");
     }
 
-    // ✅ Check if response is empty before parsing
-    const text = await response.text();
-    if (!text) {
-      throw new Error("Empty response from server");
-    }
-
-    const data = JSON.parse(text);
-
-    // ✅ Ensure feedback & correct answer exist
-    if (!data.feedback || !data.correctAnswer) {
-      throw new Error("Invalid AI response format");
-    }
-
+    const data = await response.json();
     return data;
-
   } catch (error) {
-    console.error("❌ Error getting feedback:", error);
-    return { feedback: "⚠️ AI did not return a valid response. Try again.", correctAnswer: "No correct answer available." };
+    console.error("🚨 getFeedback() error:", error);
+    return {
+      feedback: "⚠️ AI did not return a valid response. Try again.",
+    };
   }
 }
 

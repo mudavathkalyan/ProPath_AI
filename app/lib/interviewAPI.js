@@ -1,41 +1,47 @@
-export async function getQuestions(industry) {
-  try {
-    const response = await fetch(`/api/interview/questions?industry=${industry}`);
-    if (!response.ok) throw new Error("Failed to fetch questions");
-    return await response.json();
-  } catch (error) {
-    console.error("Error fetching questions:", error);
-    return [];
-  }
+// /lib/interviewAPI.js
+import { GoogleGenerativeAI } from "@google/generative-ai";
+
+const genAI = new GoogleGenerativeAI(process.env.NEXT_PUBLIC_GEMINI_API_KEY);
+
+export async function getFeedback(userAnswer, questionObj) {
+  const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+
+  const prompt = `
+You are an expert technical interviewer.
+
+Below is the interview question:
+"${questionObj.question}"
+
+The candidate answered:
+"${userAnswer}"
+
+Please evaluate the response and return a JSON object with the following fields:
+- "feedback": Provide clear, constructive feedback on the answer (strengths, weaknesses, correctness, relevance, etc.).
+- "correctAnswer": Share the ideal, detailed correct answer.
+- "suggestedAnswer": Provide a simpler or beginner-friendly version of the correct answer.
+
+⚠️ Important: Format your entire reply as a **pure JSON object** like this:
+{
+  "feedback": "...",
+  "correctAnswer": "...",
+  "suggestedAnswer": "..."
 }
+`;
 
-  
-export async function getFeedback(userAnswer, question) {
   try {
-    const response = await fetch("/api/interview", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ userAnswer, question }),
-    });
+    const result = await model.generateContent(prompt);
+    const text = await result.response.text();
 
-    console.log("🛰 Response status:", response.status);
+    const cleaned = text.replace(/```json|```/g, "").trim();
+    const parsed = JSON.parse(cleaned);
 
-    if (!response.ok) {
-      const text = await response.text();
-      console.error("⚠️ API error response:", text);
-      throw new Error("Failed to fetch feedback");
-    }
-
-    const data = await response.json();
-    return data;
+    return parsed;
   } catch (error) {
-    console.error("🚨 getFeedback() error:", error);
+    console.error("❌ Error parsing feedback from Gemini:", error);
     return {
-      feedback: "⚠️ AI did not return a valid response. Try again.",
+      feedback: "Sorry, something went wrong while generating feedback.",
+      correctAnswer: "Not available.",
+      suggestedAnswer: "Not available.",
     };
   }
 }
-
-
-
-  

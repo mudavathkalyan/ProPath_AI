@@ -1,37 +1,64 @@
-import { useState, useEffect } from "react";
+"use client";
+import { useState, useRef } from "react";
 
-export function useVoiceToText() {
+export const useVoiceToText = () => {
   const [transcript, setTranscript] = useState("");
   const [isListening, setIsListening] = useState(false);
-  const recognition = typeof window !== "undefined" && new (window.SpeechRecognition || window.webkitSpeechRecognition)();
+  const recognitionRef = useRef(null);
 
-  useEffect(() => {
-    if (!recognition) return;
+  const initializeRecognition = () => {
+    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
 
+    if (!SpeechRecognition) {
+      alert("Speech Recognition is not supported in this browser.");
+      return null;
+    }
+
+    const recognition = new SpeechRecognition();
     recognition.continuous = false;
     recognition.interimResults = false;
     recognition.lang = "en-US";
 
-    recognition.onstart = () => setIsListening(true);
-    recognition.onresult = (event) => {
-      const text = event.results[0][0].transcript;
-      setTranscript(text);
+    recognition.onstart = () => {
+      setIsListening(true);
     };
+
+    recognition.onresult = (event) => {
+      const result = event.results[0][0].transcript;
+      setTranscript(result);
+    };
+
     recognition.onerror = (event) => {
-      console.error("Speech recognition error:", event.error);
+      console.error("Voice recognition error:", event.error);
+    };
+
+    recognition.onend = () => {
       setIsListening(false);
     };
-    recognition.onend = () => setIsListening(false);
-  }, []);
 
-  const startListening = () => {
-    if (!recognition) {
-      console.error("Speech Recognition not supported.");
-      return;
-    }
-    setTranscript("");
-    recognition.start();
+    return recognition;
   };
 
-  return { transcript, isListening, startListening };
-}
+  const startListening = () => {
+    if (!recognitionRef.current) {
+      recognitionRef.current = initializeRecognition();
+    }
+    if (recognitionRef.current) {
+      recognitionRef.current.start();
+    }
+  };
+
+  const stopListening = () => {
+    if (recognitionRef.current) {
+      recognitionRef.current.stop();
+    }
+  };
+
+  return {
+    transcript,
+    isListening,
+    startListening,
+    stopListening,
+    setTranscript, // expose this so we can clear it
+  };
+};

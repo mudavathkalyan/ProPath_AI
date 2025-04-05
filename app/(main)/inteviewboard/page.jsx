@@ -98,8 +98,12 @@ export default function InterviewBoard() {
   };
 
   return (
-    <div className="p-4 w-full grid grid-cols-1 md:grid-cols-2 gap-4">
+    <div className="w-full">
+                <h1 className="text-4xl font-bold mb-6 text-center text-indigo-700">🎯 Interview Board</h1>
+    <div className="w-full grid grid-cols-1 md:grid-cols-2 gap-1">
+      
       {/* Camera Section */}
+      
       <div className="border rounded-lg overflow-hidden shadow-lg h-[400px] sticky top-4">
       {industry && (
           <video
@@ -113,9 +117,7 @@ export default function InterviewBoard() {
       </div>
 
       {/* Interview Section */}
-      <div className="p-4">
-        <h1 className="text-4xl font-bold mb-4 text-center text-indigo-700">🎯Interview Board</h1>
-
+      <div className="">
         {!industry && (
           <div className="bg-indigo-100 border border-indigo-300 text-indigo-800 p-6 rounded mb-6 text-center animate-pulse shadow-lg">
             <strong className="text-5xl font-extrabold block mb-2"> Unlimited Preparation Hub</strong>
@@ -221,5 +223,10 @@ export default function InterviewBoard() {
         )}
       </div>
     </div>
+    <div className="pt-3 pb-3 w-full text-center text-indigo-700 text-2xl md:text-2xl font-semibold italic mt-8 tracking-wide animate-pulse">
+  Keep pushing forward – small steps today lead to big success tomorrow with <span className="font-extrabold text-indigo-900">ProPathAI</span>.
+</div>
+    </div>
+
   );
 }

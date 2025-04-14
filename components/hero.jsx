@@ -29,12 +29,13 @@ const HeroSection = () => {
   return (
     <section className="w-full pt-36 md:pt-48 pb-10">
       <div className="space-y-6 text-center">
-        <div className="space-y-6 mx-auto">
-        <h1 className='gradient-home text-4xl font-bold md:text-5xl lg:text-6xl xl:text-7xl'>
-                Your AI Career Coach for
-              <br/>
-             Accelerating Success
+        <div className="space-y-5 mx-auto">
+        <h1 className='gradient-home text-4xl font-bold md:text-4xl lg:text-6xl xl:text-7xl'>
+          SELECT * FROM ProPathAI WHERE
+        <br />
+          Preparation = 'Interview'
         </h1>
+
           <p className="mx-auto max-w-[600px] text-muted-foreground md:text-xl">
             Advance your career with personalized guidance, interview prep, and
             AI-powered tools for job success.

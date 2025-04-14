@@ -111,6 +111,16 @@ export default async function Header() {
                   </Link>
                 </DropdownMenuItem>
 
+                <DropdownMenuItem asChild>
+                  <Link
+                    href="/career-path"
+                    className="flex items-center gap-2"
+                  >
+                    <PenBox className="h-4 w-4" />
+                    RoadMap
+                  </Link>
+                </DropdownMenuItem>
+
 
 
 

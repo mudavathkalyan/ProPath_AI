@@ -81,3 +81,9 @@ export default {
   },
   plugins: [require("tailwindcss-animate")],
 };
+
+content: [
+	"./app/**/*.{js,ts,jsx,tsx}",
+	"./components/**/*.{js,ts,jsx,tsx}",
+  ]
+  

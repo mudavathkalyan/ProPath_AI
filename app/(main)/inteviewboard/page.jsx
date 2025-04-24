@@ -96,6 +96,13 @@ export default function InterviewBoard() {
       setCompleted(true);
     }
   };
+  const stopCamera = () => {
+    if (videoRef.current && videoRef.current.srcObject) {
+      const tracks = videoRef.current.srcObject.getTracks();
+      tracks.forEach((track) => track.stop());
+      videoRef.current.srcObject = null;
+    }
+  };
 
   return (
     <div className="w-full">
@@ -143,7 +150,7 @@ export default function InterviewBoard() {
             </div>
 
             <div className="border p-4 rounded-lg bg-gray-100 text-black shadow">
-              <p className="text-lg font-semibold mb-1">🧠 {questions[currentQuestionIndex]?.question}</p>
+              <p className="text-lg\ font-semibold mb-1">🧠 {questions[currentQuestionIndex]?.question}</p>
               <p className="text-sm text-gray-400">🎯 Difficulty: {questions[currentQuestionIndex]?.difficulty}</p>
               <p className="text-sm text-gray-400">📚 Topic: {questions[currentQuestionIndex]?.topic}</p>
             </div>
@@ -178,8 +185,14 @@ export default function InterviewBoard() {
               onClick={submitAnswer}
               className="bg-green-600 hover:bg-green-700 text-white p-3 mt-4 rounded w-full flex items-center justify-center gap-2 shadow-lg transition duration-200"
             >
-              🚀 Submit & Next <ArrowRight className="w-5 h-5" />
+               Submit & Next <ArrowRight className="w-5 h-5" />
             </button>
+            <button
+  onClick={stopCamera}
+  className="bg-red-600 hover:bg-red-700 text-white p-2 mt-2 rounded w-full flex items-center justify-center gap-2 shadow transition duration-200"
+>
+  🛑 Stop Interview
+</button>
 
             {feedback && (
               <div className="mt-4 p-4 border rounded bg-yellow-50 space-y-4 shadow-inner animate-slide-up">
@@ -204,7 +217,7 @@ export default function InterviewBoard() {
 
         {completed && (
           <div className="bg-green-100 text-green-800 p-6 rounded mt-6 shadow-lg text-center text-xl animate-fade-in">
-            🎉 You've completed the mock interview for <strong>{industry}</strong>!
+             You've completed the mock interview for <strong>{industry}</strong>!
             <p className="mt-2 text-base">🔥 Great job! Want to try another industry?</p>
 
             <div className="mt-6 text-left">

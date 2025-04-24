@@ -8,6 +8,10 @@ export default {
   ],
   theme: {
   	extend: {
+		animation: {
+	  'fade-in': 'fadeIn 0.3s ease-out',
+	},
+		
   		colors: {
   			background: 'hsl(var(--background))',
   			foreground: 'hsl(var(--foreground))',
@@ -75,7 +79,9 @@ export default {
   		},
   		animation: {
   			'accordion-down': 'accordion-down 0.2s ease-out',
-  			'accordion-up': 'accordion-up 0.2s ease-out'
+  			'accordion-up': 'accordion-up 0.2s ease-out',
+			  'fade-in': 'fadeIn 0.3s ease-out',
+
   		}
   	}
   },
@@ -86,4 +92,6 @@ content: [
 	"./app/**/*.{js,ts,jsx,tsx}",
 	"./components/**/*.{js,ts,jsx,tsx}",
   ]
+
+
   

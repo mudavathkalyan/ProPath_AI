@@ -35,28 +35,28 @@ export default function CareerPath() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-purple-200 to-purple-400 py-12 px-6 overflow-y-scroll scrollbar-hide">
+    <div className="min-h-screen bg-gradient-to-br from-purple-200 to-purple-400 dark:from-black dark:to-gray-900 py-12 px-6 overflow-y-scroll scrollbar-hide text-gray-900 dark:text-white">
       <style>{`
-        /* Hide scrollbar but allow scrolling */
         .scrollbar-hide::-webkit-scrollbar {
           display: none;
         }
         .scrollbar-hide {
-          -ms-overflow-style: none; /* IE & Edge */
-          scrollbar-width: none; /* Firefox */
+          -ms-overflow-style: none;
+          scrollbar-width: none;
         }
       `}</style>
 
-      <h1 className="text-2xl font-bold text-center pt-10 text-violet-600">
+      <h1 className="text-2xl font-bold text-center pt-10 text-violet-600 dark:text-violet-400">
         <MapPin className="inline mr-2 animate-pulse text-red-500 pt-28" />
-        Your journey begins today-Take the first step toward your future
+        Your journey begins today—Take the first step toward your future
       </h1>
 
-      <div className="max-w-xl mx-auto flex gap-2 mb-10 text-black">
+      <div className="max-w-xl mx-auto flex gap-2 mb-10">
         <Input
           value={domain}
           onChange={(e) => setDomain(e.target.value)}
-          placeholder="Enter your career domain (e.g.,next.js,java,python...)"
+          placeholder="Enter your career domain (e.g., next.js, java, python...)"
+          className="dark:bg-gray-800 dark:border-gray-700 dark:text-white"
         />
         <Button onClick={handleGenerate} disabled={loading}>
           {loading ? "Thinking..." : "Generate"}
@@ -65,60 +65,53 @@ export default function CareerPath() {
 
       {roadmap.length > 0 && (
         <div className="relative mx-auto max-w-5xl pb-10">
-          {/* Start Node */}
           <div className="flex justify-center mb-6">
             <motion.div
               initial={{ scale: 0 }}
               animate={{ scale: 1 }}
               transition={{ duration: 0.5 }}
-              className="bg-white rounded-full p-4 shadow-md border-4 border-green-400 relative"
+              className="bg-white dark:bg-gray-800 rounded-full p-4 shadow-md border-4 border-green-400 relative"
             >
               <MapPin className="text-red-500 w-10 h-10 animate-bounce" />
-              <div className="absolute -bottom-4 left-1/2 -translate-x-1/2 w-1 h-12 bg-gray-400"></div>
+              <div className="absolute -bottom-4 left-1/2 -translate-x-1/2 w-1 h-12 bg-gray-400 dark:bg-gray-600"></div>
             </motion.div>
           </div>
 
-          {/* Roadmap Nodes */}
           <div className="flex flex-col items-center relative">
             {roadmap.map((step, index) => (
               <div key={index} className="relative z-10">
-                {/* Tooltip Title on Hover */}
                 <AnimatePresence>
-                {hoveredId === index && (
-  <motion.div
-    initial={{ opacity: 0, scale: 0.8, y: 20 }}
-    animate={{ opacity: 1, scale: 1, y: -10 }}
-    exit={{ opacity: 0, scale: 0.8, y: 20 }}
-    transition={{ type: "spring", duration: 0.5 }}
-    className="absolute -top-16 left-1/2 -translate-x-1/2 w-max max-w-xs bg-white px-4 py-2 text-sm text-violet-800 border border-violet-300 rounded-xl shadow-lg z-50"
-  >
-    <div className="relative">
-      <span className="block">{step.title}</span>
-      {/* Tail-style triangle */}
-      <div className="absolute bottom-[-8px] left-1/2 -translate-x-1/2 w-3 h-3 bg-white border-l border-b border-violet-300 rotate-45 z-0"></div>
-    </div>
-  </motion.div>
-)}
-
+                  {hoveredId === index && (
+                    <motion.div
+                      initial={{ opacity: 0, scale: 0.8, y: 20 }}
+                      animate={{ opacity: 1, scale: 1, y: -10 }}
+                      exit={{ opacity: 0, scale: 0.8, y: 20 }}
+                      transition={{ type: "spring", duration: 0.5 }}
+                      className="absolute -top-16 left-1/2 -translate-x-1/2 w-max max-w-xs bg-white dark:bg-gray-800 px-4 py-2 text-sm text-violet-800 dark:text-violet-300 border border-violet-300 dark:border-violet-700 rounded-md shadow-lg z-50"
+                    >
+                      <div className="relative">
+                        <span className="block">{step.title}</span>
+                        <div className="absolute bottom-[-8px] left-1/2 -translate-x-1/2 w-3 h-3 bg-white dark:bg-gray-800 border-l border-b border-violet-300 dark:border-violet-700 rotate-45 z-0"></div>
+                      </div>
+                    </motion.div>
+                  )}
                 </AnimatePresence>
 
-                {/* Level Node */}
                 <motion.div
                   whileHover={{ scale: 1.15, rotate: 6 }}
                   whileTap={{ scale: 1.05 }}
                   onMouseEnter={() => setHoveredId(index)}
                   onMouseLeave={() => setHoveredId(null)}
                   onClick={() => setSelectedId(index)}
-              className="cursor-pointer rounded-full bg-violet-600 text-white w-14 h-14 flex items-center justify-center shadow-xl border-4 border-white transition-all duration-300 hover:bg-violet-700">
+                  className="cursor-pointer rounded-full bg-violet-600 dark:bg-violet-500 text-white w-14 h-14 flex items-center justify-center shadow-xl border-4 border-white dark:border-gray-700 transition-all duration-300 hover:bg-violet-700 dark:hover:bg-violet-600"
+                >
                   {index + 1}
                 </motion.div>
 
-                {/* Connector */}
                 {index !== roadmap.length - 1 && (
-                  <div className="w-1 bg-gray-300 h-20 mx-auto"></div>
+                  <div className="w-1 bg-gray-300 dark:bg-gray-700 h-20 mx-auto"></div>
                 )}
 
-                {/* Detail Blast */}
                 <AnimatePresence>
                   {selectedId === index && (
                     <motion.div
@@ -127,23 +120,24 @@ export default function CareerPath() {
                       animate={{ opacity: 1, scale: 1 }}
                       exit={{ opacity: 0, scale: 0.5 }}
                       transition={{ type: "spring", duration: 0.5 }}
-                      className={`absolute top-0 ${index % 2 === 0 ? "left-20" : "right-20"} bg-white w-72 p-5 rounded-xl shadow-lg border-l-4 border-violet-500`}
+                      className={`absolute top-0 ${index % 2 === 0 ? "left-20" : "right-20"} bg-white dark:bg-gray-800 w-72 p-5 rounded-xl shadow-lg border-l-4 border-violet-500`}
                     >
                       <div className="flex items-center gap-2 mb-2">
                         <Sparkles className="text-yellow-500 animate-spin" />
-                        <h3 className="text-lg font-semibold text-violet-700">{step.title}</h3>
+                        <h3 className="text-lg font-semibold text-violet-700 dark:text-violet-300">{step.title}</h3>
                       </div>
-                      <p className="text-sm text-gray-700">{step.details}</p>
+                      <p className="text-sm text-gray-700 dark:text-gray-300">{step.details}</p>
                     </motion.div>
                   )}
                 </AnimatePresence>
               </div>
             ))}
           </div>
-          <h2 className="text-center font-bold text-2xl pt-12 text-violet-600"> 🏁 You’ve unlocked the path—now conquer the world...</h2>
+          <h2 className="text-center font-bold text-2xl pt-12 text-violet-600 dark:text-violet-400">
+            🏁 You’ve unlocked the path—now conquer the world...
+          </h2>
         </div>
       )}
-      
     </div>
   );
 }

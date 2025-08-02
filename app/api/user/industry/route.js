@@ -3,7 +3,8 @@ import { getAuth } from "@clerk/nextjs/server";
 
 export async function GET(req) {
   try {
-    const { userId } = getAuth({ headers: req.headers }); // ✅ Fix: Pass headers
+    const { userId } = getAuth({ headers: req.headers }); 
+    console.log("USERIS_OK"+userId)
 
     if (!userId) {
       return new Response(JSON.stringify({ error: "Unauthorized" }), { 

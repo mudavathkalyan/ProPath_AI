@@ -218,7 +218,7 @@ export default function InterviewBoard() {
         {completed && (
           <div className="bg-green-100 text-green-800 p-6 rounded mt-6 shadow-lg text-center text-xl animate-fade-in">
              You've completed the mock interview for <strong>{industry}</strong>!
-            <p className="mt-2 text-base">🔥 Great job! Want to try another industry?</p>
+            <p className="mt-2 text-base"> Great job! Want to try another industry?</p>
 
             <div className="mt-6 text-left">
               {allFeedback.map((entry, index) => (
